@@ -22,7 +22,7 @@ node {
 	
 	
 	stage('upload the artifact'){
-	nexusArtifactUploader artifacts: [[artifactId: 'course', classifier: '', file: '/var/lib/jenkins/workspace/pipeline2/target/course.war', type: 'war']], credentialsId: 'nexusid', groupId: 'course', nexusUrl: '13.127.126.15:8087', nexusVersion: 'nexus3', protocol: 'http', repository: 'Project1', version: '1.0.0.${BUILD_ID}'
+	nexusArtifactUploader artifacts: [[artifactId: 'course', classifier: '', file: '/home/jenkins/workspace/Course_App_Pipeline/target/course.war', type: 'war']], credentialsId: 'nexusid', groupId: 'course', nexusUrl: '13.233.101.51:8087', nexusVersion: 'nexus3', protocol: 'http', repository: 'Project1', version: '1.0.0.${BUILD_ID}'
 	}
 	
 	stage('deploy the artifact into tomcat'){
