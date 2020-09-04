@@ -1,4 +1,4 @@
-node {
+node('slave1') {
     def mvnHome
 
     stage('checkout the source code') {        
