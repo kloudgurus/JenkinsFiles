@@ -15,18 +15,19 @@ node('slave1') {
         }
     }
 	
-	
-	stage('Archieve the artifacts') {
+    stage('Archieve the artifacts') {
 	archiveArtifacts artifacts: 'target/*.war', followSymlinks: false
 		}
 	
-	
-	stage('upload the artifact'){
+    stage('upload the artifact'){
 	nexusArtifactUploader artifacts: [[artifactId: 'course', classifier: '', file: '/home/jenkins/workspace/Course_App_Pipeline/target/course.war', type: 'war']], credentialsId: 'nexusid', groupId: 'course', nexusUrl: '13.233.101.51:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'Course', version: '1.0.0.${BUILD_ID}'
 	}
 	
-	stage('deploy the artifact into tomcat'){
-	deploy adapters: [tomcat9(credentialsId: 'tomcatid', path: '', url: 'http://13.232.60.120:9090/')], contextPath: 'course', war: '**/*.war'
-	
-	}
+    stage('deploy the artifact into prod appservers') {
+	 withEnv(["ansibleHome=/home/jenkins/.local"])
+	   {
+        sh label: '', script: '"$ansibleHome/bin/ansible-playbook" /home/jenkins/playbook.yml'
+         }
+       }
+    
     }
