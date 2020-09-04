@@ -1,12 +1,20 @@
 node('slave1') {
     def mvnHome
 
-    stage('checkout the source code') {        
+    stage('Checkout the source code') {        
         git 'https://github.com/PrasadK1995/course.git'
         mvnHome = tool 'MAVEN3'
     }
-
-
+ 
+    stage('Analyse the quality of source code') {
+        withEnv(["MAVN_HOME=$mvnHome"])
+           {
+         withSonarQubeEnv(credentialsId: 'sonarid1', installationName: 'Sonar') {
+          sh '"$MAVN_HOME/bin/mvn" org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
+        }
+       }
+      }
+    
     stage('Build the artifact') {
 	   withEnv(["MAVN_HOME=$mvnHome"])
 	   {
@@ -19,11 +27,11 @@ node('slave1') {
 	archiveArtifacts artifacts: 'target/*.war', followSymlinks: false
 		}
 	
-    stage('upload the artifact'){
+    stage('Upload the artifact'){
 	nexusArtifactUploader artifacts: [[artifactId: 'course', classifier: '', file: '/home/jenkins/workspace/Course_App_Pipeline/target/course.war', type: 'war']], credentialsId: 'nexusid', groupId: 'course', nexusUrl: '13.233.101.51:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'Course', version: '1.0.0.${BUILD_ID}'
 	}
 	
-    stage('deploy the artifact into prod appservers') {
+    stage('Deploy the artifact into prod appservers') {
 	 withEnv(["ansibleHome=/home/jenkins/.local"])
 	   {
         sh label: '', script: '"$ansibleHome/bin/ansible-playbook" /home/jenkins/playbook.yml'
