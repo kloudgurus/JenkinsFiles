@@ -9,7 +9,7 @@ node('slave1') {
     stage('Analyse the quality of source code') {
         withEnv(["MAVN_HOME=$mvnHome"])
            {
-         withSonarQubeEnv(credentialsId: 'sonar', installationName: 'Sonar') {
+         withSonarQubeEnv(credentialsId: 'sonarid3', installationName: 'Sonar') {
           sh '"$MAVN_HOME/bin/mvn" org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
         }
        }
