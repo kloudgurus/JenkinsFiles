@@ -2,7 +2,7 @@ node('slave1') {
     def mvnHome
 
     stage('Checkout the source code') {        
-        git 'https://github.com/PrasadK1995/course.git'
+        git 'https://github.com/kloudgurus/course.git'
         mvnHome = tool 'MAVEN3'
     }
  
