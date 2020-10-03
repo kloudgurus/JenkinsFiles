@@ -34,7 +34,7 @@ node('slave1') {
     stage('Deploy the artifact into prod appservers') {
 	 withEnv(["ansibleHome=/home/jenkins/.local"])
 	   {
-        sh label: '', script: '"$ansibleHome/bin/ansible-playbook" /home/jenkins/playbook.yml'
+        sh label: '', script: '"$ansibleHome/bin/ansible-playbook" /home/ec2-user/playbook.yml'
          }
        }
     
