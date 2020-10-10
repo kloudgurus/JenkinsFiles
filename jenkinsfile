@@ -28,7 +28,7 @@ node('slave1') {
 		}
 	
     stage('Upload the artifact'){
-	nexusArtifactUploader artifacts: [[artifactId: 'course', classifier: '', file: '/home/ec2-user/workspace/Course-Project/target/course.war', type: 'war']], credentialsId: 'nexusid', groupId: 'course', nexusUrl: '15.206.211.85:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'Course', version: '1.0.0.${BUILD_ID}'
+	nexusArtifactUploader artifacts: [[artifactId: 'course', classifier: '', file: '/home/ec2-user/workspace/Course-Project/target/course.war', type: 'war']], credentialsId: 'nexusid', groupId: 'course', nexusUrl: '13.233.0.99:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'Course', version: '1.0.0.${BUILD_ID}'
 	}
 	
     stage('Deploy the artifact into prod appservers') {
