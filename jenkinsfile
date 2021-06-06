@@ -32,7 +32,7 @@ node('slave1') {
 	}
 	
     stage('Deploy the artifact into prod appservers') {
-	 withEnv(["ansibleHome=/usr/local/bin"])
+	 withEnv(["ansibleHome=/usr/local/"])
 	   {
         sh label: '', script: '"$ansibleHome/bin/ansible-playbook" /home/ec2-user/deployment.yml'
          }
